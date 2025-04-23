@@ -12,9 +12,11 @@ Suggests:
     fairify,
     readr,
     readxl,
-    readODS
+    readODS,
+    testthat (>= 3.0.0)
 Remotes: 
     git::https://forgemia.inra.fr/umr-g-eau/fairify.git
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
