@@ -48,6 +48,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Check for existing deployments
+        run: |
+          DEPLOYMENTS=$(gh api -X GET repos/${{ github.repository }}/pages/deployments | jq '.[] | select(.status == "in_progress") | .id')
+          if [ -n "$DEPLOYMENTS" ]; then
+            echo "Canceling existing deployments: $DEPLOYMENTS"
+            for DEPLOYMENT in $DEPLOYMENTS; do
+              gh api -X POST repos/${{ github.repository }}/pages/deployments/$DEPLOYMENT/cancel
+            done
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
