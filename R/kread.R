@@ -36,13 +36,13 @@
 #' # Reading an ODS file
 #' data <- kread("data.ods")
 #' }
-#' 
+#'
 #' @export
-#' 
+#'
 kread <- function(path, ...) {
   ext <- tools::file_ext(path)
   if (ext == "") stop("Path not referencing a file")
-  switch (
+  switch(
     ext,
     csv = readr::read_delim,
     tsv = readr::read_delim,
