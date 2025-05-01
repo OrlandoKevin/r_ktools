@@ -4,6 +4,8 @@
 #'
 #' @param x The object to be merged. The type of this object determines the
 #' method used.
+#' @param y An optional second object to merge with `x`. The type of this
+#' object also determines the method used.
 #' @param ... Additional arguments passed to specific methods.
 #' @template cfg
 #'
@@ -13,6 +15,27 @@
 #'
 kmerge <- function(x, ...) {
   UseMethod("kmerge", x)
+}
+
+#' @title kmerge Method for Data Frames
+#'
+#' @description Merges two data frames using the specified package.
+#'
+#' @inheritParams kmerge
+#' @param package The package to use for merging. Options are "base" or "dplyr".
+#'
+#' @return A merged data frame.
+#'
+#' @export
+#' @rdname kmerge
+#'
+kmerge.data.frame <- function(x, y, package = "base", ..., cfg = loadConfig()) {
+  FUN <- switch(
+    package,
+    base = merge,
+    dplyr = dplyr::full_join
+  )
+  FUN(x, y, ...)
 }
 
 #' @title kmerge Method for Lists

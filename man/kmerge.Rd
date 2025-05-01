@@ -2,10 +2,13 @@
 % Please edit documentation in R/kmerge.R
 \name{kmerge}
 \alias{kmerge}
+\alias{kmerge.data.frame}
 \alias{kmerge.list}
 \title{Generic kmerge Function}
 \usage{
 kmerge(x, ...)
+
+\method{kmerge}{data.frame}(x, y, package = "base", ..., cfg = loadConfig())
 
 \method{kmerge}{list}(x, y = NULL, ..., cfg = loadConfig())
 }
@@ -17,16 +20,22 @@ kmerge(x, ...)
 \item{y}{An optional second list to merge with \code{x}. If \code{NULL}, merges items
 within \code{x}.}
 
+\item{package}{The package to use for merging. Options are "base" or "dplyr".}
+
 \item{cfg}{a config object. Configuration to use. See \link{loadConfig} for
 details}
 }
 \value{
 The merged object.
 
+A merged data frame.
+
 A merged object, either from list items or multiple lists.
 }
 \description{
 A generic function to merge objects using method dispatch.
+
+Merges two data frames using the specified package.
 
 Merges list items or multiple lists based on the provided
 arguments.
